@@ -1,6 +1,7 @@
 package 编程大题;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -31,6 +32,7 @@ public class T6 {
 			set.add(c);
 		}
 		o = set.toArray();
+		Arrays.sort(o);
 		dfs(1);
 	}
 	private static void dfs(int step) {
