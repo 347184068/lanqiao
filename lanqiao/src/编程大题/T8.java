@@ -1,7 +1,9 @@
 package 编程大题;
 
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * 在某些应用中，为了支持灵活性，往往用到自定义的公式。
@@ -34,35 +36,84 @@ import java.util.Scanner;
  *
  */
 public class T8 {
-	
+
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String method = in.nextLine();
-		clac(method);
-	}
-	
-	private static void clac(String method) {
-		// TODO Auto-generated method stub
-		String op = method.substring(0,method.indexOf("("));
-		String param = method.substring(method.indexOf("(")+1,method.lastIndexOf(")"));
-		
-		
+		String methodString = in.nextLine();
+		System.out.println(clac(methodString));
 	}
 
-	public static int add(int x, int y){
-		return x+y;
+	private static int clac(String s) {
+		// TODO Auto-generated method stub
+		Stack<String> method = new Stack<String>(); // 保存方法名
+		Stack<Character> bracket = new Stack<Character>();// 保存对应括号
+		Stack<String> num = new Stack<String>(); // 保存数字
+		Stack<Integer> count = new Stack<Integer>(); // 保存参数个数
+
+		StringBuffer ss = new StringBuffer(); // 添加字母
+		StringBuffer nn = new StringBuffer(); // 添加数字
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z') {
+				ss.append(c); // 拼凑方法名
+			} else if (c == '(') {
+				method.push(ss.toString()); // 方法名拼凑完成,添加到栈
+				count.push(0);
+				ss.setLength(0); // 放入方法,并清空临时串
+				bracket.push(')');
+			} else if (c >= '0' && c <= '9') {
+				nn.append(c); // 拼凑数字
+			} else if (nn.length() != 0) {
+				num.push(nn.toString()); // 数字名拼凑完成,添加到栈
+				count.push(count.pop() + 1); // 参数个数加1
+				nn.setLength(0);
+			}
+			if (c == ')') {
+				String m = method.pop(); // 得到方法
+				int[] n = new int[count.pop()]; // 依参数个数开辟数组
+				for (int j = 0; j < n.length; j++) { // 得到每个参数
+					n[j] = Integer.parseInt(num.pop());
+				}
+				bracket.pop(); // 去一层括号
+				if ("add".equals(m)) {
+					if (n.length == 2) { // add() 两个参数
+						num.push("" + add(n[1], n[0]));
+					} else if (n.length == 3) { // add() 三个参数
+						num.push("" + add(n[2], n[1], n[0]));
+					}
+				} else if ("min".equals(m)) { // min()
+					num.push("" + min(n[1], n[0]));
+				} else if ("max".equals(m)) { // max()
+					num.push("" + max(n[1], n[0]));
+				} else if ("doubleMe".equals(m)) { // doubleMe()
+					num.push("" + doubleMe(n[0]));
+				}
+				if (count.size() != 0) { // 如果不是最外层
+					count.push(count.pop() + 1);
+				}
+			}
+		}
+		return Integer.parseInt(num.pop()); // 返回最后的结果数据
 	}
-	public static int add(int x, int y, int z){
-		return x+y+z;
+
+	public static int add(int x, int y) {
+		return x + y;
 	}
-	public static int min(int x, int y){
-		return x>y ? y : x;
+
+	public static int add(int x, int y, int z) {
+		return x + y + z;
 	}
-	public static int max(int x, int y){
-		return x>y ? x :y;
+
+	public static int min(int x, int y) {
+		return x > y ? y : x;
 	}
-	public static int doubleMe(int x){
-		return x*2;
+
+	public static int max(int x, int y) {
+		return x > y ? x : y;
+	}
+
+	public static int doubleMe(int x) {
+		return x * 2;
 	}
 
 }
