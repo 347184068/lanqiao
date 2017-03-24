@@ -1,0 +1,49 @@
+package 编程大题;
+
+import java.util.Scanner;
+
+/**
+ * 
+ *类描述：牛牛在研究他自己独创的平衡数，平衡数的定义是：将一个数分成左右两部分，分别成为两个新的数。
+	左右部分必须满足以下两点：
+	1，左边和右边至少存在一位。
+	2，左边的数每一位相乘如果等于右边的数每一位相乘，则这个数称为平衡数。
+	例如：1221这个数，分成12和21的话，1*2=2*1，则称1221为平衡数，再例如：1236这个数，可以分成123和1*2*3=6，所以1236也是平衡数。而1234无论怎样分也不满足平衡数。
+ *@author: XuYunXuan
+ *@date： 日期：2017年3月24日 时间：下午5:18:23
+ *
+ */
+public class T24 {
+
+	public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        while(in.hasNext()){
+            int n = in.nextInt();
+            String s = n+"";
+            //1234
+            boolean flag = false;
+            for(int i =1 ; i < s.length() ;i++){
+                String left = s.substring(0,i);
+                String right = s.substring(i);
+                if(mut(left)==mut(right)){
+                    flag = true;
+                }
+            }
+            if(flag){
+                System.out.println("YES");
+            }else{
+                System.out.println("NO");
+            }
+        }
+    }
+     
+    public static int mut(String s){
+        char[] array = s.toCharArray();
+        int res=1;
+        for(char c : array){
+            res*= c-'0';
+        }
+        return res;
+    }
+
+}
