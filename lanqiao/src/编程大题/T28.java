@@ -24,40 +24,29 @@ public class T28 {
 	 * @date： 日期：2017年4月5日 时间：下午7:14:57
 	 *
 	 */
-	static char[] c;
-	static int[] book;
-	static long count = 0;
+	
 	public static void main(String[] args) {
-		c = new char[17];
-		book = new int[17];
-		dfs(0);
+		long sum = 0;
+		String s = "bckfqlajhemgiodnp";
+		for(int i = 0 ; i < s.length() ;i++){
+			int count = 0;
+			for(int j = i+1 ; j < s.length() ;j++){
+				if(s.charAt(j)<s.charAt(i)){
+					count++;
+				}
+			}
+			sum+=count*fact(s.length()-1-i);
+		}
+		System.out.println(sum);
 	}
-	private static void dfs(int step) {
+
+	private static long fact(int n) {
 		// TODO Auto-generated method stub
-		if(step==17){
-			String s = "";
-			for(char cha : c){
-				s+=cha;
-			}
-			if(s.equals("bckfqlajhemgiodnp")){
-				System.out.println(count);
-			}
-			count++;
-			return;
+		long res = 1;
+		for(int i =2 ; i <=n ;i++){
+			res*=i;
 		}
-		
-		
-		for(char ch = 'a' ;  ch<='q' ;ch++){
-			if(book[ch-'a']==0){
-				book[ch-'a'] = 1;
-				c[step] = ch;
-				dfs(step+1);
-				book[ch-'a'] = 0;
-			}
-		}
-		
-		
-		return;
-		
+		return res;
 	}
+	
 }
