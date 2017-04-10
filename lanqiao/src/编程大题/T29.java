@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class T29 {
 	public static void main(String[] args) {
 		int arr[] = new int[16];
-		invKT(arr,15,42);
+		invKT(arr,15,1);
 		System.out.println(Arrays.toString(arr));
 	}
 
@@ -30,10 +30,10 @@ public class T29 {
 			s *= i;
 		return s;
 	}
-
+	
 	// n为lsit大小，k为全排列的编码
 	public static void invKT(int list[], int n, int k) {
-		boolean vis[] = new boolean[17];
+		boolean vis[] = new boolean[18];
 		int i, j, t;
 		k--;// 全排列序号从1开始
 		for (i = 0; i < n; i++) {
