@@ -17,7 +17,7 @@ public class T3 {
 
 		for (int i = 0; i <= bu; i++) {
 			da[k] = i;
-			f(ta, da, k + 1, ho-(i>0?1:0), bu - i, sc - ta[k] * i); // 填空位置
+			f(ta, da, k + 1,ho - (i > 0 ? 1 : 0), bu - i, sc - ta[k] * i); // 填空位置
 		}
 
 		da[k] = 0;
